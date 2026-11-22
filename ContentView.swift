@@ -38,6 +38,7 @@ struct ContentView: View {
     @State private var outputURL: URL?
     @State private var showShare = false
     @State private var errorMessage: String?
+    @State private var showError = false
 
     private let accent = Color(red: 0.20, green: 0.78, blue: 0.96)
     private let panel = Color(red: 0.105, green: 0.12, blue: 0.15)
@@ -90,7 +91,6 @@ struct ContentView: View {
                         .presentationDetents([.medium, .large])
                 }
             }
-            .alert("AutoCut Studio", isPresented: Binding(
-                get: { errorMessage != nil },
-                set: { if !$0 { errorMessage = nil } }
-            )) {
+            .alert("AutoCut Studio", isPresented: $showError) {
+                Button("OK", role: .cancel) {
+                    showError = false
